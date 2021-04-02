@@ -19,7 +19,6 @@ const App = () => {
     //     .enter().append("path")
     //     .attr("d", path);
     // });
-    // test
 
     fetch("/world-110m.json", {
       headers : { 
