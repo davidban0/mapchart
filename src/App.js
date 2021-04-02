@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import * as d3 from "d3"
-import * as topojson from "topojson"
+import { feature } from "topojson"
 import './App.css';
 
 const App = () => {
@@ -8,8 +8,15 @@ const App = () => {
   const inputEl = useRef(null)
 
   useEffect(() => {
-    var svg = d3.select(inputEl.current).append("svg");
-    var path = d3.geoPath().projection(d3.geoMercator());
+    var svg = d3.select(inputEl.current).append("svg")
+    // var width = +svg.attr("width")
+    // var height = +svg.attr("height")
+    var path = d3.geoPath()
+    var projection = d3.geoMercator()
+        // .scale(100)
+        // .center([0,0])
+        // .translate([width / 2, height / 2])
+    
 
     // d3.json("/world-110m.json", function(error, world) {
     //   if (error) throw error;
@@ -35,10 +42,11 @@ const App = () => {
           console.log('dave ===============> ', world)
 
         svg.selectAll("path")
-        .data(topojson.feature(world,world.objects.countries).features)
+        .data(feature(world,world.objects.countries).features)
         .enter().append("path")
+        .attr('class', 'country')
+        .attr("d", path.projection(projection))
         .attr("d", path);
-          
         })
       })
 
